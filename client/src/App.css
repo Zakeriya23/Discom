@@ -1,90 +1,178 @@
 body {
-  background-image: url('./assets/valley.jpeg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100vh;
-  width: 100vw;
-  margin: 0px;
-}
+    background-image: url('./assets/valley.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    margin: 0px;
+  }
+  
+  .background {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(75deg, rgb(20, 23, 33) 0%, rgb(20, 23, 33) 50%, rgba(20, 23, 33,0.8) 100%);
+    /* Vertical center */
+    display: table-cell;
+    vertical-align: middle;
+  }
+  
+  .form-card {
+    width: 50%;
+    max-width: 350px;
+    padding: 0% 25% 0% 25%;
+  }
+  
+  .form-title { 
+    font-size: 42px; 
+    font-family: 'Avenir'; 
+    font-weight: 800; 
+    letter-spacing: 0.5px; 
+    color: #e8e8e8; 
+    padding-bottom: 12px; 
+  }
+  
+  .form-subtitle {
+    font-size: 18px;
+    font-family: 'Avenir';
+    letter-spacing: 0.5px;
+    color: #afafaf;
+    padding-bottom: 24px;
+  }
+  
+  .auth {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 12px;
+  }
+  .auth-label {
+    position: absolute;
+    top: 8px;
+    left: 18px;
+    font-size: 11px;
+    color: rgb(175, 175, 175);
+    font-family: Avenir;
+    width: 100px;
+  }
+  .auth-input {
+    background-color: #3e404b;
+    color: white;
+    font-family: "Avenir";
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    padding: 24px 18px 12px 18px;
+    width: calc(100% - 18px - 18px);
+    margin-bottom: 12px;
+  }
+  .auth-button {
+    width: 100%;
+    height: 53px;
+    color: white;
+    background-color: #fa541c;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    font-family: "Avenir";
+    cursor: pointer;
+    transition: all .44s ease;
+    -webkit-transition: all .44s ease;
+    -moz-transition: all .44s ease;
+  }
+  .auth-button:hover { filter: brightness(145%); }
+  
+  .chat-wrapper {
+    height: 80vh; 
+    width: 80%;
+    margin-left: 10%; 
+    color: white; 
+    background: rgb(43, 47, 60);
+  }
+  .selected-contact {
+    background-color: rgba(37, 99, 235, 0.2); /* Equivalent to bg-blue-50 */
+  }
+  .selected-indicator {
+    width: 0.25rem; /* Equivalent to w-1 */
+    background-color: #2563eb; /* Equivalent to bg-blue-500 */
+    height: 3rem; /* Equivalent to h-12 */
+    border-radius: 0 0.25rem 0.25rem 0; /* Equivalent to rounded-r-md */
+  }
 
-.background {
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(75deg, rgb(20, 23, 33) 0%, rgb(20, 23, 33) 50%, rgba(20, 23, 33,0.8) 100%);
-  /* Vertical center */
-  display: table-cell;
-  vertical-align: middle;
-}
+ .contact-details {
+    display: flex;
+    gap: 0.5rem; /* Equivalent to gap-2 */
+    padding: 0.5rem 0 0.5rem 1rem; /* Equivalent to py-2 pl-4 */
+    align-items: center;
+  }
+  .contact-username {
+    color: #1f2937; /* Equivalent to text-gray-800 */
+  }
+  .auth {
+    border-bottom: 1px solid #f3f4f6; /* Equivalent to border-b border-gray-100 */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Equivalent to gap-2 */
+    cursor: pointer;
+  }
+  /* Avatar background colors */
+.teal-avatar { background-color: #5eead4; } /* Equivalent to bg-teal-200 */
+.red-avatar { background-color: #fecaca; } /* Equivalent to bg-red-200 */
+.green-avatar { background-color: #bbf7d0; } /* Equivalent to bg-green-200 */
+.purple-avatar { background-color: #e9d5ff; } /* Equivalent to bg-purple-200 */
+.blue-avatar { background-color: #bfdbfe; } /* Equivalent to bg-blue-200 */
+.yellow-avatar { background-color: #fef08a; } /* Equivalent to bg-yellow-200 */
+.orange-avatar { background-color: #fed7aa; } /* Equivalent to bg-orange-200 */
+.pink-avatar { background-color: #fbcfe8; } /* Equivalent to bg-pink-200 */
+.fuchsia-avatar { background-color: #f5d0fe; } /* Equivalent to bg-fuchsia-200 */
+.rose-avatar { background-color: #fecdd3; } /* Equivalent to bg-rose-200 */
 
-.form-card {
-  width: 50%;
-  max-width: 350px;
-  padding: 0% 25% 0% 25%;
-}
-
-.form-title { 
-  font-size: 42px; 
-  font-family: 'Avenir'; 
-  font-weight: 800; 
-  letter-spacing: 0.5px; 
-  color: #e8e8e8; 
-  padding-bottom: 12px; 
-}
-
-.form-subtitle {
-  font-size: 18px;
-  font-family: 'Avenir';
-  letter-spacing: 0.5px;
-  color: #afafaf;
-  padding-bottom: 24px;
-}
-
-.auth {
+/* General avatar styles */
+.avatar {
+  width: 2rem; /* Equivalent to w-8 */
+  height: 2rem; /* Equivalent to h-8 */
   position: relative;
-  display: inline-block;
-  width: 100%;
-  padding-bottom: 12px;
+  border-radius: 9999px; /* Equivalent to rounded-full */
+  display: flex;
+  align-items: center;
 }
-.auth-label {
-  position: absolute;
-  top: 8px;
-  left: 18px;
-  font-size: 11px;
-  color: rgb(175, 175, 175);
-  font-family: Avenir;
-  width: 100px;
-}
-.auth-input {
-  background-color: #3e404b;
-  color: white;
-  font-family: "Avenir";
-  outline: none;
-  border: none;
-  border-radius: 8px;
-  padding: 24px 18px 12px 18px;
-  width: calc(100% - 18px - 18px);
-  margin-bottom: 12px;
-}
-.auth-button {
-  width: 100%;
-  height: 53px;
-  color: white;
-  background-color: #fa541c;
-  border: none;
-  outline: none;
-  border-radius: 8px;
-  font-family: "Avenir";
-  cursor: pointer;
-  transition: all .44s ease;
-  -webkit-transition: all .44s ease;
-  -moz-transition: all .44s ease;
-}
-.auth-button:hover { filter: brightness(145%); }
 
-.chat-wrapper {
-  height: 80vh; 
-  width: 80%;
-  margin-left: 10%; 
-  color: white; 
-  background: rgb(43, 47, 60);
+.avatar-initial {
+  text-align: center;
+  width: 100%;
+  opacity: 0.7; /* Equivalent to opacity-70 */
 }
+
+/* Online and offline indicators */
+.online-indicator {
+  position: absolute;
+  width: 0.75rem; /* Equivalent to w-3 */
+  height: 0.75rem; /* Equivalent to h-3 */
+  background-color: #34d399; /* Equivalent to bg-green-400 */
+  bottom: 0;
+  right: 0;
+  border-radius: 9999px; /* Equivalent to rounded-full */
+  border: 1px solid #ffffff; /* Equivalent to border border-white */
+}
+
+.offline-indicator {
+  position: absolute;
+  width: 0.75rem; /* Equivalent to w-3 */
+  height: 0.75rem; /* Equivalent to h-3 */
+  background-color: #9ca3af; /* Equivalent to bg-gray-400 */
+  bottom: 0;
+  right: 0;
+  border-radius: 9999px; /* Equivalent to rounded-full */
+  border: 1px solid #ffffff; /* Equivalent to border border-white */
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem; /* Equivalent to p-4 */
+  }
+  
+  .logo-image {
+    height: 1.5rem; /* Equivalent to h-6 */
+    width: auto;
+  }
+

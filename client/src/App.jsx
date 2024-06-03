@@ -1,18 +1,17 @@
-import { useState } from "react";
-
+import axios from "axios";
+import {UserContextProvider} from "./UserContext";
+import Routes from "./Routes";
 import "./App.css";
 
-import AuthPage from "./AuthPage";
-import ChatsPage from "./ChatsPage";
 
 function App() {
-  const [user, setUser] = useState(undefined);
-
-  if (!user) {
-    return <AuthPage onAuth={(user) => setUser(user)} />;
-  } else {
-    return <ChatsPage user={user} />;
-  }
+  axios.defaults.baseURL = 'http://localhost:4040';
+  axios.defaults.withCredentials = true;
+  return (
+    <UserContextProvider>
+      <Routes />
+    </UserContextProvider>
+  )
 }
 
-export default App;
+export default App
