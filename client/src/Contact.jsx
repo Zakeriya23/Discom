@@ -1,3 +1,4 @@
+import React from 'react';
 import Profile from "./Profile.jsx";
 import "./App.css";
 

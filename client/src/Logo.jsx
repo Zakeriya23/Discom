@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from './assets/Discom_transparent.png';
+import "./App.css";
 
 export default function Logo() {
   return (

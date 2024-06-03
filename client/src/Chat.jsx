@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import Profile from "./Profile.jsx";
 import Logo from "./Logo";
 import { UserContext } from "./UserContext.jsx";
 import { uniqBy } from "lodash";
@@ -32,24 +31,27 @@ export default function Chat() {
       }, 1000);
     });
   }
+
   function showOnlinePeople(peopleArray) {
     const people = {};
-    peopleArray.forEach(({userId,username}) => {
+    peopleArray.forEach(({ userId, username }) => {
       people[userId] = username;
     });
     setOnlinePeople(people);
   }
+
   function handleMessage(ev) {
     const messageData = JSON.parse(ev.data);
-    console.log({ev,messageData});
+    console.log({ ev, messageData });
     if ('online' in messageData) {
       showOnlinePeople(messageData.online);
     } else if ('text' in messageData) {
       if (messageData.sender === selectedUserId) {
-        setMessages(prev => ([...prev, {...messageData}]));
+        setMessages(prev => ([...prev, { ...messageData }]));
       }
     }
   }
+
   function logout() {
     axios.post('/logout').then(() => {
       setWs(null);
@@ -57,6 +59,7 @@ export default function Chat() {
       setUsername(null);
     });
   }
+
   function sendMessage(ev, file = null) {
     if (ev) ev.preventDefault();
     ws.send(JSON.stringify({
@@ -89,6 +92,7 @@ export default function Chat() {
       });
     };
   }
+
   useEffect(() => {
     axios.get('/people').then(res => {
       const offlinePeopleArr = res.data
@@ -104,16 +108,17 @@ export default function Chat() {
 
   useEffect(() => {
     if (selectedUserId) {
-      axios.get('/messages/'+selectedUserId).then(res => {
+      axios.get('/messages/' + selectedUserId).then(res => {
         setMessages(res.data);
       });
     }
   }, [selectedUserId]);
 
-  const onlinePeopleExclOurUser = {...onlinePeople};
+  const onlinePeopleExclOurUser = { ...onlinePeople };
   delete onlinePeopleExclOurUser[id];
 
   const messagesWithoutDupes = uniqBy(messages, '_id');
+
   return (
     <div className="chat-container">
       <div className="sidebar">
