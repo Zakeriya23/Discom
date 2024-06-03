@@ -1,4 +1,5 @@
 import Profile from "./Profile.jsx";
+import "./App.css";
 
 export default function Contact({ id, username, onClick, selected, online }) {
   return (

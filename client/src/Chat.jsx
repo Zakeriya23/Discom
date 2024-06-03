@@ -5,6 +5,7 @@ import { UserContext } from "./UserContext.jsx";
 import { uniqBy } from "lodash";
 import axios from "axios";
 import Contact from "./Contact.jsx";
+import "./App.css";
 
 export default function Chat() {
   const [ws, setWs] = useState(null);
@@ -113,53 +114,62 @@ export default function Chat() {
   delete onlinePeopleExclOurUser[id];
 
   const messagesWithoutDupes = uniqBy(messages, '_id');
-
-
   return (
-    <div className="background">
-      <div className="form-card">
-        <div className="auth">
-          <div className="form-title">Discom</div>
-          <div className="form-subtitle">Connect with your friends</div>
-          <div className="auth">
-            <div className="auth-label">Username</div>
-            <input type="text" className="auth-input" value={username} readOnly />
-          </div>
-          <div className="auth">
-            <button onClick={() => {
-              setId(null);
-              setUsername(null);
-            }} className="auth-button">Logout</button>
-          </div>
+    <div className="chat-container">
+      <div className="sidebar">
+        <div className="logo-container">
+          <Logo className="logo-image" />
         </div>
-      </div>
-      <div className="chat-wrapper">
-        <div>
-          {Object.keys(onlinePeople).map(userId => (
-            <div key={userId} className="auth" onClick={() => setSelectedUserId(userId)}>
-              {onlinePeople[userId]}
-            </div>
+        <div className="sidebar-content">
+          {Object.keys(onlinePeopleExclOurUser).map(userId => (
+            <Contact
+              key={userId}
+              id={userId}
+              online={true}
+              username={onlinePeopleExclOurUser[userId]}
+              onClick={() => { setSelectedUserId(userId); console.log({ userId }) }}
+              selected={userId === selectedUserId} />
           ))}
           {Object.keys(offlinePeople).map(userId => (
-            <div key={userId} className="auth" onClick={() => setSelectedUserId(userId)}>
-              {offlinePeople[userId].username}
-            </div>
+            <Contact
+              key={userId}
+              id={userId}
+              online={false}
+              username={offlinePeople[userId].username}
+              onClick={() => setSelectedUserId(userId)}
+              selected={userId === selectedUserId} />
           ))}
         </div>
-        <div>
+        <div className="user-info">
+          <span className="username-display">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="user-icon">
+              <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
+            </svg>
+            {username}
+          </span>
+          <button onClick={logout} className="logout-button">logout</button>
+        </div>
+      </div>
+      <div className="chat-content">
+        <div className="messages-container">
           {!selectedUserId && (
-            <div className="form-subtitle">Select a person from the sidebar</div>
+            <div className="select-user-prompt">
+              <div className="prompt-text">&larr; Select a person from the sidebar</div>
+            </div>
           )}
           {!!selectedUserId && (
-            <div>
-              <div>
-                {messages.map(message => (
-                  <div key={message._id} className={message.sender === id ? 'text-right' : 'text-left'}>
-                    <div className={`inline-block p-2 my-2 rounded-md text-sm ${message.sender === id ? 'bg-blue-500 text-white' : 'bg-white text-gray-500'}`}>
+            <div className="messages-wrapper">
+              <div className="messages-list">
+                {messagesWithoutDupes.map(message => (
+                  <div key={message._id} className={`message ${message.sender === id ? 'sent' : 'received'}`}>
+                    <div className={`message-bubble ${message.sender === id ? 'sent-bubble' : 'received-bubble'}`}>
                       {message.text}
                       {message.file && (
-                        <div>
-                          <a target="_blank" rel="noopener noreferrer" href={axios.defaults.baseURL + '/uploads/' + message.file}>
+                        <div className="file-link">
+                          <a target="_blank" href={axios.defaults.baseURL + '/uploads/' + message.file}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="file-icon">
+                              <path fillRule="evenodd" d="M18.97 3.659a2.25 2.25 0 00-3.182 0l-10.94 10.94a3.75 3.75 0 105.304 5.303l7.693-7.693a.75.75 0 011.06 1.06l-7.693 7.693a5.25 5.25 0 11-7.424-7.424l10.939-10.94a3.75 3.75 0 115.303 5.304L9.097 18.835l-.008.008-.007.007-.002.002-.003.002A2.25 2.25 0 015.91 15.66l7.81-7.81a.75.75 0 011.061 1.06l-7.81 7.81a.75.75 0 001.054 1.068L18.97 6.84a2.25 2.25 0 000-3.182z" clipRule="evenodd" />
+                            </svg>
                             {message.file}
                           </a>
                         </div>
@@ -171,22 +181,27 @@ export default function Chat() {
               </div>
             </div>
           )}
-          {!!selectedUserId && (
-            <form onSubmit={sendMessage} className="auth">
-              <input
-                type="text"
-                value={newMessageText}
-                onChange={ev => setNewMessageText(ev.target.value)}
-                placeholder="Type your message here"
-                className="auth-input"
-              />
-              <label className="auth">
-                <input type="file" className="hidden" onChange={sendFile} />
-              </label>
-              <button type="submit" className="auth-button">Send</button>
-            </form>
-          )}
         </div>
+        {!!selectedUserId && (
+          <form className="message-input-form" onSubmit={sendMessage}>
+            <input type="text"
+              value={newMessageText}
+              onChange={ev => setNewMessageText(ev.target.value)}
+              placeholder="Type your message here"
+              className="message-input" />
+            <label className="file-upload">
+              <input type="file" className="file-input" onChange={sendFile} />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="file-upload-icon">
+                <path fillRule="evenodd" d="M18.97 3.659a2.25 2.25 0 00-3.182 0l-10.94 10.94a3.75 3.75 0 105.304 5.303l7.693-7.693a.75.75 0 011.06 1.06l-7.693 7.693a5.25 5.25 0 11-7.424-7.424l10.939-10.94a3.75 3.75 0 115.303 5.304L9.097 18.835l-.008.008-.007.007-.002.002-.003.002A2.25 2.25 0 015.91 15.66l7.81-7.81a.75.75 0 011.061 1.06l-7.81 7.81a.75.75 0 001.054 1.068L18.97 6.84a2.25 2.25 0 000-3.182z" clipRule="evenodd" />
+              </svg>
+            </label>
+            <button type="submit" className="send-button">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="send-icon">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+              </svg>
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );
