@@ -1,17 +1,18 @@
 import axios from "axios";
-import {UserContextProvider} from "./UserContext";
+import { UserContextProvider } from "./UserContext";
 import Routes from "./Routes";
 import "./App.css";
 
+const baseURL = process.env.REACT_APP_API_URL;
+axios.defaults.baseURL = baseURL;
+axios.defaults.withCredentials = true;
 
 function App() {
-  axios.defaults.baseURL = 'http://localhost:4040';
-  axios.defaults.withCredentials = true;
   return (
     <UserContextProvider>
       <Routes />
     </UserContextProvider>
-  )
+  );
 }
 
-export default App
+export default App;
