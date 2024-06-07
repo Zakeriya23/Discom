@@ -3,7 +3,7 @@ import { UserContextProvider } from "./UserContext";
 import Routes from "./Routes";
 import "./App.css";
 
-const baseURL = process.env.REACT_APP_API_URL;
+const baseURL = 'https://discom-33d5f13753f5.herokuapp.com/';
 axios.defaults.baseURL = baseURL;
 axios.defaults.withCredentials = true;
 
