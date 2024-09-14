@@ -1,5 +1,4 @@
 # Discom
-https://github.com/Zakeriya23/Discom
 
 <img width="1440" alt="image" src="https://github.com/Zakeriya23/Discom/assets/87618816/4b932454-36ba-413a-b5e8-cf894384fdbf">
 
